@@ -1,0 +1,95 @@
+<h3 class="mb-5">Nested reactive forms</h3>
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <div class="mt-3">
+        <label class="form-label">
+            First Name:
+            <input
+                type="text"
+                class="form-control"
+                formControlName="firstName"
+            />
+        </label>
+    </div>
+    <div class="mt-3">
+        <label class="form-label">
+            Last Name:
+            <input
+                type="text"
+                class="form-control"
+                formControlName="lastName"
+            />
+        </label>
+    </div>
+    <div class="mt-3" formGroupName="address">
+        <h3>Address</h3>
+        <div>
+            <label class="form-label">
+                Street:
+                <input
+                    type="text"
+                    class="form-control"
+                    formControlName="street"
+                />
+            </label>
+        </div>
+        <div>
+            <label class="form-label">
+                City:
+                <input
+                    type="text"
+                    class="form-control"
+                    formControlName="city"
+                />
+            </label>
+        </div>
+        <div>
+            <label class="form-label">
+                State:
+                <input
+                    type="text"
+                    class="form-control"
+                    formControlName="state"
+                />
+            </label>
+        </div>
+        <div>
+            <label class="form-label">
+                Zip Code:
+                <input type="text" class="form-control" formControlName="zip" />
+            </label>
+        </div>
+    </div>
+    <div class="mt-3" formArrayName="aliases">
+        <h3>Aliases</h3>
+        <button class="btn btn-primary btn-sm" (click)="addAlias()">
+            Add Alias
+        </button>
+
+        <div class="mt-3" *ngFor="let alias of aliases.controls; let i = index">
+            <!-- The repeated alias template -->
+            <label>
+                Alias:
+                <input type="text" [formControlName]="i" />
+            </label>
+        </div>
+    </div>
+    <div class="d-grid gap-2">
+        <button
+            class="btn btn-success btn-lg mt-5"
+            type="submit"
+            [disabled]="!profileForm.valid"
+        >
+            Submit
+        </button>
+    </div>
+</form>
+
+<hr />
+<h3>Form results</h3>
+<pre>{{ profileForm.value | json }}</pre>
+
+<p>Form Status: {{ profileForm.status | json }}</p>
+
+<p>
+    <button (click)="updateProfile()">Update Profile</button>
+</p>
